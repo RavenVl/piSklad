@@ -34,11 +34,6 @@ if __name__ == "__main__":
         window.ui.dateEdit.setDate(window.conf["period"])
     window.show()
 
-    def temp():
-        all_rez = table.find(kodpr='2854', kodpl='1')
-        for rec in all_rez:
-            print(rec)
-
     def selectFile():
         dialog = QFileDialog()
         dialog.setFileMode(QFileDialog.Directory)
