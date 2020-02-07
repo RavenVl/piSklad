@@ -34,8 +34,10 @@ if __name__ == "__main__":
         window.ui.dateEdit.setDate(window.conf["period"])
     window.show()
 
-
-    # logik
+    def temp():
+        all_rez = table.find(kodpr='2854', kodpl='1')
+        for rec in all_rez:
+            print(rec)
 
     def selectFile():
         dialog = QFileDialog()
@@ -62,8 +64,8 @@ if __name__ == "__main__":
 
 
     def copyDataMem():
-        # pathDBF = "e:\\KS\\basehdm\\sklad414.dbf"
-        pathDBF = window.conf["src"]
+        pathDBF = "e:\\KS\\basehdm\\sklad414.dbf"
+        # pathDBF = window.conf["src"]
 
         for record in DBF(pathDBF, lowernames=True):
             table.insert(record)
@@ -73,23 +75,18 @@ if __name__ == "__main__":
         kodpolu = window.ui.lineEdit_3.text()
         kodpr = window.ui.lineEdit_2.text()
         all_rez = table.find(kodpr=kodpr, kodpl=kodpolu)
-        n_row = len(list(all_rez))
-        for rec in all_rez:
-            print(rec)
-        # rez_print = ["Дата               Номер док.    Получатель                        Товар                                          Цена  "]
+        mass_rez = list(all_rez)
+        n_row = len(mass_rez)
         window.ui.tableWidget.setColumnCount(5)
         window.ui.tableWidget.setRowCount(n_row)
-        window.ui.tableWidget.setHorizontalHeaderLabels(["Header 1", "Header 2", "Header 3", "$", "5"])
-        window.ui.tableWidget.setItem(0, 0, QTableWidgetItem("1"))
-        i = 0
-        for rec in all_rez:
-            print(rec)
-            window.ui.tableWidget.setItem(i, 0, QTableWidgetItem("1"))
-            window.ui.tableWidget.setItem(i, 1, QTableWidgetItem(str(i)))
+        window.ui.tableWidget.setHorizontalHeaderLabels(["Дата", "Ном. док.", "Получатель", "Товар", "Цена"])
+        for i, rec in enumerate(mass_rez):
+            window.ui.tableWidget.setItem(i, 0, QTableWidgetItem(str(rec["dat"])))
+            window.ui.tableWidget.setItem(i, 1, QTableWidgetItem(str(rec["dov"])))
             window.ui.tableWidget.setItem(i, 2, QTableWidgetItem(rec["naim"]))
             window.ui.tableWidget.setItem(i, 3, QTableWidgetItem(rec["tovar"]))
             window.ui.tableWidget.setItem(i, 4, QTableWidgetItem(str(rec["cena"])))
-            i += 1
+
 
     window.ui.pushButton.clicked.connect(selectFile)
     window.ui.pushButton_4.clicked.connect(writeNastr)
