@@ -59,11 +59,18 @@ if __name__ == "__main__":
 
 
     def copyDataMem():
-        pathDBF = "e:\\KS\\basehdm\\sklad414.dbf"
-        # pathDBF = window.conf["src"]
-
-        for record in DBF(pathDBF, lowernames=True):
+        # pathDBF = "e:\\KS\\basehdm\\sklad414.dbf"
+        pathDBF = window.conf["src"]
+        _dbf = DBF(pathDBF, lowernames=True)
+        step_dbf = 100 /len(_dbf)
+        progres = 0
+        window.ui.progressBar.setValue(progres)
+        for record in _dbf:
             table.insert(record)
+            progres += step_dbf
+            window.ui.progressBar.setValue(progres)
+            # window.ui.progressBar.
+        window.ui.pushButton_3.setEnabled(True)
         print(len(table))
 
     def showResult():
