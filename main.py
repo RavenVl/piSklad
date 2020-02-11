@@ -69,14 +69,15 @@ if __name__ == "__main__":
             table.insert(record)
             progres += step_dbf
             window.ui.progressBar.setValue(progres)
+            QApplication.processEvents()
             # window.ui.progressBar.
         window.ui.pushButton_3.setEnabled(True)
-        print(len(table))
+    
 
     def showResult():
         kodpolu = window.ui.lineEdit_3.text()
         kodpr = window.ui.lineEdit_2.text()
-        all_rez = table.find(kodpr=kodpr, kodpl=kodpolu)
+        all_rez = table.find(kodpr=kodpr, kodpl=kodpolu, np=2)
         mass_rez = list(all_rez)
         n_row = len(mass_rez)
         window.ui.tableWidget.setColumnCount(5)
